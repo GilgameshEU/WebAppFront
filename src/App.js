@@ -39,7 +39,7 @@ function App() {
         setLoginStatus(response.data.message);
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 2000);
       }
     });
   };
@@ -52,7 +52,7 @@ function App() {
         setLogoutStatus(response.data.message);
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 2000);
       } else {
         setLogoutStatus("Successfully logged out");
       }
@@ -62,7 +62,7 @@ function App() {
   useEffect(() => {
     Axios.get("https://my-sql-deploy.herokuapp.com/login").then((response) => {
       if (response.data.loggedIn !== 0) {
-        setLoginStatus(response.data.user[0].username);
+        setLoginStatus(response.data[0].username);
         // setLoginStatus("test");
       } else {
         setLoginStatus("");
