@@ -79,14 +79,15 @@ function App() {
           <form>
             <div className="form-group">
               <label
-                htmlFor="inputUsername"
+                htmlFor="username"
                 className="text-secondary">
                 Username
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="inputUsername"
+                name="username"
+                id="username"
                 onChange={(e) => {
                   setUsernameReg(e.target.value);
                 }}
@@ -94,14 +95,15 @@ function App() {
             </div>
             <div className="form-group">
               <label
-                htmlFor="inputPassword"
+                htmlFor="password"
                 className="text-secondary">
                 Password
               </label>
               <input
                 type="password"
                 className="form-control"
-                id="inputPassword"
+                name="password"
+                id="password"
                 onChange={(e) => {
                   setPasswordReg(e.target.value);
                 }}
@@ -109,14 +111,15 @@ function App() {
             </div>
             <div className="form-group">
               <label
-                htmlFor="inputMail"
+                htmlFor="mail"
                 className="text-secondary">
                 Mail
               </label>
               <input
                 type="email"
                 className="form-control"
-                id="inputMail"
+                id="mail"
+                name="mail"
                 onChange={(e) => {
                   setMailReg(e.target.value);
                 }}
