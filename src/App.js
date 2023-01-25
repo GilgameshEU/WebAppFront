@@ -62,8 +62,8 @@ function App() {
   useEffect(() => {
     Axios.get("https://my-sql-deploy.herokuapp.com/login").then((response) => {
       if (response.data.loggedIn !== 0) {
-        console.log("asdasd");
-        setLoginStatus(response.data.user[0].username);
+        //setLoginStatus(response.data.user[0].username);
+        setLoginStatus("test");
       } else {
         setLoginStatus("");
       }
