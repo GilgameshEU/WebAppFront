@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import jwt from "jsonwebtoken";
 
 function App() {
   const [usernameReg, setUsernameReg] = useState("");
@@ -14,7 +15,7 @@ function App() {
   const [logoutStatus, setLogoutStatus] = useState("");
 
   Axios.defaults.withCredentials = true;
-  //"http://localhost:3001/login"
+  // "http://localhost:3001/login"
   // const login = () => {
   //   Axios.post("https://my-sql-deploy.herokuapp.com/login", {
   //     username: username,
@@ -79,9 +80,8 @@ function App() {
       if (response.data.message) {
         setLoginStatus(response.data.message);
       } else {
-        // set the JWT token received from the server as an HTTP header
-        Axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-        setLoginStatus(response.data.username);
+        localStorage.setItem("token", response.data.token);
+        setLoginStatus(response.data.user.username);
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -105,8 +105,7 @@ function App() {
   };
 
   const logout = () => {
-    // remove the JWT token from the headers
-    delete Axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("token");
     setLogoutStatus("Successfully logged out");
     setTimeout(() => {
       window.location.reload();
@@ -114,13 +113,20 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("https://my-sql-deploy.herokuapp.com/check-auth").then((response) => {
-      if (response.data.authenticated) {
-        setLoginStatus(response.data.username);
-      } else {
-        setLoginStatus("");
-      }
-    });
+    const token = localStorage.getItem("token");
+    if (token) {
+      Axios.get("https://my-sql-deploy.herokuapp.com/login", {
+        headers: {
+          Authorization: "Bearer ${token}",
+        },
+      }).then((response) => {
+        if (response.data.loggedIn) {
+          setLoginStatus(response.data.user.username);
+        } else {
+          setLoginStatus("");
+        }
+      });
+    }
   }, []);
 
   return (
